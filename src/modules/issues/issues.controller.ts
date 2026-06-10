@@ -37,7 +37,6 @@ const createIssue = async (req: Request, res: Response) => {
         error.code === "23514"
           ? "Invalid type. Type must be either 'bug' or 'feature_request'."
           : "Internal Server Error.",
-      // message: error.message,
       error,
     });
   }
@@ -54,7 +53,11 @@ const getAllIssues = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error: unknown) {
-    return res.status(500).json({
+    const isNotFoundError =
+      error instanceof Error && error.message === "Issue not found";
+    const statusCode = isNotFoundError ? 404 : 500;
+
+    return res.status(statusCode).json({
       success: false,
       message: error instanceof Error ? error.message : "Something went wrong",
     });
@@ -73,7 +76,11 @@ const getSingleIssue = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error: unknown) {
-    return res.status(500).json({
+    const isNotFoundError =
+      error instanceof Error && error.message === "Issue not found";
+    const statusCode = isNotFoundError ? 404 : 500;
+
+    return res.status(statusCode).json({
       success: false,
       message: error instanceof Error ? error.message : "Something went wrong",
     });
@@ -113,7 +120,11 @@ const updateIssue = async (req: Request, res: Response) => {
       data: result,
     });
   } catch (error: unknown) {
-    return res.status(500).json({
+    const isNotFoundError =
+      error instanceof Error && error.message === "Issue not found";
+    const statusCode = isNotFoundError ? 404 : 500;
+
+    return res.status(statusCode).json({
       success: false,
       message: error instanceof Error ? error.message : "Something went wrong",
     });
@@ -148,7 +159,11 @@ const deleteIssue = async (req: Request, res: Response) => {
       message: "Issue deleted successfully",
     });
   } catch (error: unknown) {
-    return res.status(500).json({
+    const isNotFoundError =
+      error instanceof Error && error.message === "Issue not found";
+    const statusCode = isNotFoundError ? 404 : 500;
+
+    return res.status(statusCode).json({
       success: false,
       message: error instanceof Error ? error.message : "Something went wrong",
     });

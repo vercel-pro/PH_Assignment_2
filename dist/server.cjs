@@ -24182,7 +24182,6 @@ var createIssue = async (req, res) => {
       statusCode: 500,
       success: false,
       message: error.code === "23514" ? "Invalid type. Type must be either 'bug' or 'feature_request'." : "Internal Server Error.",
-      // message: error.message,
       error
     });
   }
@@ -24196,7 +24195,9 @@ var getAllIssues = async (req, res) => {
       data: result
     });
   } catch (error) {
-    return res.status(500).json({
+    const isNotFoundError = error instanceof Error && error.message === "Issue not found";
+    const statusCode = isNotFoundError ? 404 : 500;
+    return res.status(statusCode).json({
       success: false,
       message: error instanceof Error ? error.message : "Something went wrong"
     });
@@ -24212,7 +24213,9 @@ var getSingleIssue = async (req, res) => {
       data: result
     });
   } catch (error) {
-    return res.status(500).json({
+    const isNotFoundError = error instanceof Error && error.message === "Issue not found";
+    const statusCode = isNotFoundError ? 404 : 500;
+    return res.status(statusCode).json({
       success: false,
       message: error instanceof Error ? error.message : "Something went wrong"
     });
@@ -24243,7 +24246,9 @@ var updateIssue = async (req, res) => {
       data: result
     });
   } catch (error) {
-    return res.status(500).json({
+    const isNotFoundError = error instanceof Error && error.message === "Issue not found";
+    const statusCode = isNotFoundError ? 404 : 500;
+    return res.status(statusCode).json({
       success: false,
       message: error instanceof Error ? error.message : "Something went wrong"
     });
@@ -24269,7 +24274,9 @@ var deleteIssue = async (req, res) => {
       message: "Issue deleted successfully"
     });
   } catch (error) {
-    return res.status(500).json({
+    const isNotFoundError = error instanceof Error && error.message === "Issue not found";
+    const statusCode = isNotFoundError ? 404 : 500;
+    return res.status(statusCode).json({
       success: false,
       message: error instanceof Error ? error.message : "Something went wrong"
     });
