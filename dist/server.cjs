@@ -24288,7 +24288,7 @@ var router2 = (0, import_express2.Router)();
 router2.post("/", issueController.createIssue);
 router2.get("/", issueController.getAllIssues);
 router2.get("/:id", issueController.getSingleIssue);
-router2.put("/:id", issueController.updateIssue);
+router2.patch("/:id", issueController.updateIssue);
 router2.delete("/:id", issueController.deleteIssue);
 var issueRoute = router2;
 
