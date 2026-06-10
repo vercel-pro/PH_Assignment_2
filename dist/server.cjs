@@ -23887,7 +23887,7 @@ var loginUserIntoDB = async (payload) => {
   );
   const { password: _, ...remainingUserData } = user;
   return {
-    data: { token: accessToken, ...remainingUserData }
+    data: { token: accessToken, user: { ...remainingUserData } }
   };
 };
 var authService = {
